@@ -27,6 +27,27 @@ class App extends React.Component {
           artist: 'Witt Lowry',
           album: 'Nevers Road',
           id: 3
+        },
+        {
+          name: 'Shake That',
+          artist: 'Eminem',
+          album: 'Curtain Call',
+          id: 4
+        }
+      ],
+      playlistName: 'Bangers Only',
+      playlistTracks: [
+        {
+          name: 'XO Tour LIif3',
+          artist: 'Lil Uzi Vert',
+          album: 'Luv is Rage',
+          id: 0
+        },
+        {
+          name: 'Shake That',
+          artist: 'Eminem',
+          album: 'Curtain Call',
+          id: 4
         }
       ]
     }
@@ -39,7 +60,7 @@ class App extends React.Component {
           <SearchBar />
           <div className='App-playlist'>
             <SearchResults searchResults={this.state.searchResults} />
-            <Playlist />
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
           </div>
         </div>
       </div>
