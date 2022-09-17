@@ -1,46 +1,22 @@
 import './App.css';
+import {SearchResults} from '../SearchResults/SearchResults';
+import {SearchBar} from '../SearchBar/SearchBar';
+import {Playlist} from '../Playlist/Playlist';
 import React from 'react';
-
-import {SearchResults} from '../SearchResults/SearchResults.js'
-import {SearchBar} from '../SearchBar/SearchBar.js'
-import {Playlist} from '../Playlist/Playlist.js'
+import Spotify from '../../util/Spotify.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this)
     this.updatePlaylistName = this.updatePlaylistName.bind(this)
     this.savePlaylist = this.savePlaylist.bind(this)
     this.search = this.search.bind(this)
+    
     this.state = {
-      searchResults: [
-        {
-          name: 'XO Tour LIif3',
-          artist: 'Lil Uzi Vert',
-          album: 'Luv is Rage',
-          id: 0
-
-        },
-        {
-          name: 'Donda',
-          artist: 'Kayne West',
-          album: 'Donda',
-          id: 1
-        },
-        {
-          name: 'Oxygin',
-          artist: 'Witt Lowry',
-          album: 'Nevers Road',
-          id: 3
-        },
-        {
-          name: 'Shake That',
-          artist: 'Eminem',
-          album: 'Curtain Call',
-          id: 4
-        }
-      ],
-      playlistName: 'Bangers Only',
+      searchResults: [],
+      playlistName: 'New Playlist',
       playlistTracks: [
         {
           name: 'XO Tour LIif3',
@@ -85,7 +61,10 @@ class App extends React.Component {
     const trackURIs = [this.state.playlistTracks]
   }
   search(term) {
-    console.log(term);
+    //console.log(term);
+    Spotify.search(term).then((result) => {
+      this.setState({searchResults: result})
+    })
   }
   render() {
     return (
