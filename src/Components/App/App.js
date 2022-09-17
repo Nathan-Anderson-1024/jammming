@@ -17,20 +17,7 @@ class App extends React.Component {
     this.state = {
       searchResults: [],
       playlistName: 'New Playlist',
-      playlistTracks: [
-        {
-          name: 'XO Tour LIif3',
-          artist: 'Lil Uzi Vert',
-          album: 'Luv is Rage',
-          id: 0
-        },
-        {
-          name: 'Shake That',
-          artist: 'Eminem',
-          album: 'Curtain Call',
-          id: 4
-        }
-      ]
+      playlistTracks: []
     }
   }
   addTrack(track) {
@@ -58,7 +45,14 @@ class App extends React.Component {
     })
   }
   savePlaylist() {
-    const trackURIs = [this.state.playlistTracks]
+    const trackURIs = this.state.playlistTracks.map((track) => track.uri);
+    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+      this.setState({
+        playlistName: 'New Playlist',
+        playlistTracks: [],
+      })
+    })
+    
   }
   search(term) {
     //console.log(term);
