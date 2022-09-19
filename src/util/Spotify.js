@@ -1,5 +1,6 @@
 const clientId = '';
-const redirectUri = "http://nathanajammmingproject.surge.sh";
+//const redirectUri = "http://nathanajammmingproject.surge.sh";
+const redirectUri = "http://192.168.1.68:3000/";
 let accessToken;
 
 const Spotify = {
@@ -28,7 +29,32 @@ const Spotify = {
       window.location = accessUrl;
     }
   },
-
+  getPlaylists() {
+    const userAccessToken = Spotify.getAccessToken();
+    const headers = {
+      Authorization: `Bearer ${userAccessToken}`
+    }
+    let userID;
+    return fetch('https://api.spotify.com/v1/me', {headers: headers}).then((response) => response.json())
+    .then((jsonResponse) => {
+      userID = jsonResponse.id
+      return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+        headers: headers,
+        method: 'GET'
+      }).then((response) => {
+        return response.json()
+      }).then((jsonResponse) => {
+        if (!jsonResponse.items) {
+          return []
+        }
+        console.log(jsonResponse)
+        return jsonResponse.items.map((playlist) => ({
+          name: playlist.name,
+          id: playlist.id
+        }))
+      })
+    })
+  },
   //making a request to the spotify API
   search(term) {
     const accessToken = Spotify.getAccessToken();
@@ -45,7 +71,6 @@ const Spotify = {
           //if there are no tracks in the response
           return [];
         }
-        console.log(jsonResponse);
         return jsonResponse.tracks.items.map((track) => ({
           id: track.id,
           name: track.name,

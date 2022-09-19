@@ -4,6 +4,7 @@ import {SearchBar} from '../SearchBar/SearchBar';
 import {Playlist} from '../Playlist/Playlist';
 import React from 'react';
 import Spotify from '../../util/Spotify.js';
+import {AllPlaylists} from '../AllPlaylists/AllPlaylists.js'
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -13,11 +14,13 @@ class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this)
     this.savePlaylist = this.savePlaylist.bind(this)
     this.search = this.search.bind(this)
+    this.getPlaylist = this.getPlaylist.bind(this)
     
     this.state = {
       searchResults: [],
       playlistName: 'New Playlist',
-      playlistTracks: []
+      playlistTracks: [],
+      yourPlaylists: []
     }
   }
   addTrack(track) {
@@ -60,6 +63,11 @@ class App extends React.Component {
       this.setState({searchResults: result})
     })
   }
+  getPlaylist() {
+    Spotify.getPlaylists().then((result) => {
+      this.setState({yourPlaylists: result})
+    })
+  }
   render() {
     return (
       <div>
@@ -71,6 +79,7 @@ class App extends React.Component {
             <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks}
                       onRemove={this.removeTrack} onNameChange={this.updatePlaylistName}
                       onSave={this.savePlaylist} />
+            <AllPlaylists playlists={this.state.yourPlaylists} onClick={this.getPlaylist}/>
           </div>
         </div>
       </div>
