@@ -1,6 +1,7 @@
-const clientId = '';
-//const redirectUri = "http://nathanajammmingproject.surge.sh";
-const redirectUri = "http://192.168.1.68:3000/";
+const clientId = process.env.REACT_APP_redirectUri;
+const redirectUri = "http://nathanajammmingproject.surge.sh";
+
+
 let accessToken;
 
 const Spotify = {
