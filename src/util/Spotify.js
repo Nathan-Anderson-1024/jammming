@@ -1,4 +1,4 @@
-const clientId = process.env.REACT_APP_REDIRECT_URI;
+const clientId = process.env.REACT_APP_CLIENT_ID;
 const redirectUri = "http://nathanajammmingproject.surge.sh";
 
 
